@@ -16,14 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    authform.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    systemselector.cpp
 
 HEADERS += \
-    mainwindow.h
+    authform.h \
+    mainwindow.h \
+    structures.h \
+    systemselector.h
 
 FORMS += \
-    mainwindow.ui
+    authform.ui \
+    mainwindow.ui \
+    systemselector.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
