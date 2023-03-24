@@ -61,16 +61,16 @@ int main(int argc, char *argv[])
 //    writeIntoFile("OperatingSystem.bin");
 //    readFromFile("OperatingSystem.bin");
 
-    char some_char[3];
-    char another_char[3];
-    strcpy(some_char, "abcdef");
-    some_char[3] = '\0';
-    std::cout << some_char << std::endl;
-    std::cout << another_char << std::endl;
-    return 0;
+//    char some_char[3];
+//    char another_char[3];
+//    strcpy(some_char, "abcdef");
+//    some_char[3] = '\0';
+//    std::cout << some_char << std::endl;
+//    std::cout << another_char << std::endl;
+//    return 0;
 
-//    QApplication a(argc, argv);
-//    SystemSelector ss;
-//    ss.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    SystemSelector ss;
+    ss.show();
+    return a.exec();
 }

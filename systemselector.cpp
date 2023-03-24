@@ -1,10 +1,11 @@
 #include "systemselector.h"
 #include "ui_systemselector.h"
+#include "authform.h"
 
 
 SystemSelector::SystemSelector(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SystemSelector)
+    QWidget(parent)
+    , ui(new Ui::SystemSelector)
 {
     ui->setupUi(this);
 
@@ -71,6 +72,9 @@ void SystemSelector::chooseFileSystem()
 
     operatingSystem os;
     this->readFromFile(file_name.toStdString(), os);
+    AuthForm *af = new AuthForm(os);
+    af->show();
+    this->close();
 }
 
 void SystemSelector::createFileSystem()
