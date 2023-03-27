@@ -67,6 +67,8 @@ int main(int argc, char *argv[])
 //    some_char[3] = '\0';
 //    std::cout << some_char << std::endl;
 //    std::cout << another_char << std::endl;
+//    std::bitset<8>set("01001001");
+//    std::cout << set << std::endl;
 //    return 0;
 
     QApplication a(argc, argv);

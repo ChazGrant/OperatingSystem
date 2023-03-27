@@ -25,6 +25,10 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    operatingSystem os;
+    void setFunctionCallers();
+
+    operatingSystem m_os;
+    QList<functionCaller> m_function_callers;
+    QStringList m_function_alliases;
 };
 #endif // MAINWINDOW_H

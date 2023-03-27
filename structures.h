@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <bitset>
+#include <functional>
+#include <QStringList>
 
 enum UserRole {
     ADMIN='a',
@@ -35,6 +37,7 @@ typedef struct rootDirectory {
 typedef struct usersTable {
     char user_name[15];
     char user_password[32];
+    char user_id[2];
     char user_role;
 } usersTable;
 
@@ -43,5 +46,15 @@ typedef struct operatingSystem {
     rootDirectory root_directory;
     usersTable user_table;
 } operatingSystem;
+
+struct functionCaller {
+    char* allias;
+    std::function<void(QStringList commands_list)> action;
+
+    functionCaller (char* allias, std::function<void(QStringList commands_list)> action) {
+        this->allias = allias;
+        this->action = action;
+    };
+};
 
 #endif // STRUCTURES_H
