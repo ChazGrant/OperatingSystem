@@ -60,6 +60,7 @@ void SystemSelector::readFromFile(std::string t_file_name, operatingSystem &t_os
     std::cout << "Users Table" << std::endl;
     std::cout << ut.user_name << std::endl;
     std::cout << ut.user_password << std::endl;
+    std::cout << ut.user_id << std::endl;
     std::cout << ut.user_role << std::endl;
 }
 
@@ -105,6 +106,7 @@ void SystemSelector::createFileSystem()
     usersTable ut;
     strcpy(ut.user_name, "ChazGrant");
     strcpy(ut.user_password, "password");
+    strcpy(ut.user_id, "1");
     ut.user_role = (char)UserRole::USER;
     sprintf(file_system_name, "%s%s", file_system_name, ".bin");
     std::ofstream output_file(file_system_name);

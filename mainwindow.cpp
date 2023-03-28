@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 
-void login(char t_user_name[15], char t_user_password[32])
+bool login(char t_user_name[15], char t_user_password[32])
 {
 
 }
@@ -29,7 +29,6 @@ void copyFile(char* t_source, char* t_destination)
 
 }
 
-
 void moveFile(char* t_source, char* t_destination)
 {
 
@@ -49,6 +48,11 @@ void changeAccessRights(char* t_file_name, std::bitset<6> t_access_rights)
     }
     std::string string_bits = t_access_rights.to_string<char, std::string::traits_type, std::string::allocator_type>();
     qDebug() << "Bits: " << string_bits.c_str();
+}
+
+void changeDirectory(char* t_directory_name)
+{
+
 }
 
 void changeProcessPriority(int t_process_id, int t_priority)
@@ -71,11 +75,6 @@ void createGroup(char* t_group_name)
 
 }
 
-void createUser(char* t_user_name)
-{
-
-}
-
 void deleteFile(char* t_file_name)
 {
 
@@ -92,6 +91,11 @@ void killProcess(int t_process_id)
 }
 
 void getProcsInfo()
+{
+
+}
+
+void getUsersInfo()
 {
 
 }
@@ -187,11 +191,13 @@ void createDirectory(QStringList t_commands_list)
 
 void createUser(QStringList t_commands_list)
 {
-    if (t_commands_list.length() != 2) {
+    if (t_commands_list.length() != 4) {
         qDebug() << "Неверное количество параметров";
     } else {
         char* user_name = (char*)t_commands_list[1].toStdString().c_str();
-        createUser(user_name);
+        char* user_password = (char*)t_commands_list[2].toStdString().c_str();
+        char user_role = t_commands_list[3].at(0).unicode();
+        createUser(user_name, user_password, user_role);
     }
 }
 
@@ -235,11 +241,33 @@ void killProcess(QStringList t_commands_list)
     }
 }
 
-void getProcsInfo(QStringList t_commands_list)
+void changeDirectory(QStringList t_commands_list)
 {
-    getProcsInfo();
+    if (t_commands_list.length() != 2) {
+        qDebug() << "Неверное количество параметров";
+    } else {
+        char* directory_name = (char*)t_commands_list[1].toStdString().c_str();
+        changeDirectory(directory_name);
+    }
 }
 
+void getProcsInfo(QStringList t_commands_list)
+{
+    if (t_commands_list.length() != 1) {
+        qDebug() << "Неверное количество параметров";
+    } else {
+        getProcsInfo();
+    }
+}
+
+void getUsersInfo(QStringList t_commands_list)
+{
+    if (t_commands_list.length() != 1) {
+        qDebug() << "Неверное количество параметров";
+    } else {
+        getUsersInfo();
+    }
+}
 
 MainWindow::MainWindow(operatingSystem t_os, QWidget *parent)
     : QMainWindow(parent)
@@ -307,4 +335,6 @@ void MainWindow::setFunctionCallers()
     m_function_callers.append(functionCaller((char*)"ps", [&](QStringList commands_list){ getProcsInfo(commands_list) ; }));
     m_function_callers.append(functionCaller((char*)"chpr", [&](QStringList commands_list){ changeProcessPriority(commands_list) ; }));
     m_function_callers.append(functionCaller((char*)"kill", [&](QStringList commands_list){ killProcess(commands_list) ; }));
+    m_function_callers.append(functionCaller((char*)"cd", [&](QStringList commands_list){ changeDirectory(commands_list) ; }));
+    m_function_callers.append(functionCaller((char*)"ul", [&](QStringList commands_list){ getUsersInfo(commands_list) ; }));
 }
