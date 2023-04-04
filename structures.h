@@ -22,12 +22,18 @@ typedef struct superBlock {
     int hard_disk_size;
 } superBlock;
 
+// file_attributes:
+// Архивный
+// Скрытый
+// Системный
+// Только чтение
+// Каталог
 typedef struct rootDirectory {
     int file_name_size;
     uint32_t file_extension_size;
     uint32_t file_size;
-    std::bitset<3> file_attributes;
-    std::bitset<5> access_rights;
+    std::bitset<4> file_attributes;
+    std::bitset<9> access_rights;
     uint16_t user_id;
     uint64_t file_creation_date;
     uint64_t file_modification_date;
