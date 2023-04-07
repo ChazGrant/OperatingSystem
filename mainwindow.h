@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 
 #include "structures.h"
+#include <fstream>
 
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +27,26 @@ private:
     Ui::MainWindow *ui;
 
     void setFunctionCallers();
+
+    void addToTheOutput(QString t_string);
+    void saveOSState();
+
+    void createFile(QStringList t_commands_list);
+    void copyFile(QStringList t_commands_list);
+    void moveFile(QStringList t_commands_list);
+    void renameFile(QStringList t_commands_list);
+    void changeAccessRights(QStringList t_commands_list);
+    void changeProcessPriority(QStringList t_commands_list);
+    void writeToTheEnd(QStringList t_commands_list);
+    void createDirectory(QStringList t_commands_list);
+    void createUser(QStringList t_commands_list);
+    void createGroup(QStringList t_commands_list);
+    void deleteFile(QStringList t_commands_list);
+    void deleteDirectory(QStringList t_commands_list);
+    void killProcess(QStringList t_commands_list);
+    void changeDirectory(QStringList t_commands_list);
+    void getProcsInfo(QStringList t_commands_list);
+    void getUsersInfo(QStringList t_commands_list);
 
     operatingSystem m_os;
     QList<functionCaller> m_function_callers;

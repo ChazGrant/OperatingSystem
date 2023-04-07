@@ -80,7 +80,7 @@ void SystemSelector::chooseFileSystem()
 
 void SystemSelector::createFileSystem()
 {
-    char file_system_name[6];
+    char* file_system_name;
     strcpy(file_system_name, ui->fileSystemName_textEdit->toPlainText().toStdString().c_str());
     superBlock sb;
     strcpy(sb.file_system_name, file_system_name);
