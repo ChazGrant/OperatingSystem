@@ -28,6 +28,10 @@ typedef struct superBlock {
 // Системный
 // Только чтение
 // Каталог
+typedef struct file {
+
+} file;
+
 typedef struct rootDirectory {
     int file_name_size;
     uint32_t file_extension_size;
@@ -45,6 +49,7 @@ typedef struct usersTable {
     char user_password[32];
     char user_id[2];
     char user_role;
+    usersTable* next = nullptr;
 } usersTable;
 
 typedef struct operatingSystem {

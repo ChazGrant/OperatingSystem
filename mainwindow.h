@@ -31,6 +31,8 @@ private:
     void addToTheOutput(QString t_string);
     void saveOSState();
 
+    QList<usersTable> getAllUsers();
+
     void createFile(QStringList t_commands_list);
     void copyFile(QStringList t_commands_list);
     void moveFile(QStringList t_commands_list);

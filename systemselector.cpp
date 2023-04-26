@@ -36,32 +36,32 @@ void SystemSelector::readFromFile(std::string t_file_name, operatingSystem &t_os
     t_os.root_directory = rd;
     t_os.user_table = ut;
 
-    std::cout << "Super Block: " << std::endl;
-    std::cout << sb.file_system_name << std::endl;
-    std::cout << sb.cluster_size << std::endl;
-    std::cout << sb.cluster_amount << std::endl;
-    std::cout << sb.root_dir_size << std::endl;
-    std::cout << sb.root_dir_offset << std::endl;
-    std::cout << sb.user_table_offset << std::endl;
-    std::cout << sb.data_area_offset << std::endl;
-    std::cout << sb.hard_disk_size << std::endl << std::endl;
+//    std::cout << "Super Block: " << std::endl;
+//    std::cout << sb.file_system_name << std::endl;
+//    std::cout << sb.cluster_size << std::endl;
+//    std::cout << sb.cluster_amount << std::endl;
+//    std::cout << sb.root_dir_size << std::endl;
+//    std::cout << sb.root_dir_offset << std::endl;
+//    std::cout << sb.user_table_offset << std::endl;
+//    std::cout << sb.data_area_offset << std::endl;
+//    std::cout << sb.hard_disk_size << std::endl << std::endl;
 
-    std::cout << "Root Directory: " << std::endl;
-    std::cout << rd.user_id << std::endl;
-    std::cout << rd.file_size << std::endl;
-    std::cout << rd.access_rights << std::endl;
-    std::cout << rd.file_name_size << std::endl;
-    std::cout << rd.file_attributes << std::endl;
-    std::cout << rd.file_creation_date << std::endl;
-    std::cout << rd.file_extension_size << std::endl;
-    std::cout << rd.file_modification_date << std::endl;
-    std::cout << rd.initial_cluster_number << std::endl << std::endl;
+//    std::cout << "Root Directory: " << std::endl;
+//    std::cout << rd.user_id << std::endl;
+//    std::cout << rd.file_size << std::endl;
+//    std::cout << rd.access_rights << std::endl;
+//    std::cout << rd.file_name_size << std::endl;
+//    std::cout << rd.file_attributes << std::endl;
+//    std::cout << rd.file_creation_date << std::endl;
+//    std::cout << rd.file_extension_size << std::endl;
+//    std::cout << rd.file_modification_date << std::endl;
+//    std::cout << rd.initial_cluster_number << std::endl << std::endl;
 
-    std::cout << "Users Table" << std::endl;
-    std::cout << ut.user_name << std::endl;
-    std::cout << ut.user_password << std::endl;
-    std::cout << ut.user_id << std::endl;
-    std::cout << ut.user_role << std::endl;
+//    std::cout << "Users Table" << std::endl;
+//    std::cout << ut.user_name << std::endl;
+//    std::cout << ut.user_password << std::endl;
+//    std::cout << ut.user_id << std::endl;
+//    std::cout << ut.user_role << std::endl;
 }
 
 void SystemSelector::chooseFileSystem()
@@ -80,10 +80,13 @@ void SystemSelector::chooseFileSystem()
 
 void SystemSelector::createFileSystem()
 {
+    if (ui->fileSystemName_textEdit->toPlainText().length() == 0) {
+        return;
+    }
     char* file_system_name;
-    strcpy(file_system_name, ui->fileSystemName_textEdit->toPlainText().toStdString().c_str());
+    // strcpy(file_system_name, ui->fileSystemName_textEdit->toPlainText().toStdString().c_str());
     superBlock sb;
-    strcpy(sb.file_system_name, file_system_name);
+    strcpy(sb.file_system_name, "test");
     sb.cluster_size = 4;
     sb.cluster_amount = 3;
     sb.root_dir_size = 50;
@@ -108,11 +111,21 @@ void SystemSelector::createFileSystem()
     strcpy(ut.user_password, "password");
     strcpy(ut.user_id, "1");
     ut.user_role = (char)UserRole::USER;
-    sprintf(file_system_name, "%s%s", file_system_name, ".bin");
-    std::ofstream output_file(file_system_name);
+
+    usersTable new_user;
+    strcpy(new_user.user_name, "NewUser");
+    strcpy(new_user.user_password, "password");
+    strcpy(new_user.user_id, "2");
+    new_user.user_role = (char)UserRole::USER;
+    ut.next = &new_user;
+
+    // sprintf(file_system_name, "%s%s", file_system_name, ".bin");
+    // std::ofstream output_file(file_system_name);
+    std::ofstream output_file("test.bin");
 
     output_file.write((char*)&sb, sizeof(sb));
     output_file.write((char*)&rd, sizeof(rd));
     output_file.write((char*)&ut, sizeof(ut));
     output_file.close();
+    qDebug() << "File System Has Been Created";
 }

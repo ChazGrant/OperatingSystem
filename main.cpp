@@ -71,6 +71,30 @@ int main(int argc, char *argv[])
 //    std::cout << set << std::endl;
 //    return 0;
 
+//    usersTable ut;
+//    strcpy(ut.user_name, "ChazGrant");
+//    strcpy(ut.user_password, "password");
+//    strcpy(ut.user_id, "1");
+//    ut.user_role = (char)UserRole::USER;
+
+//    usersTable new_user;
+//    strcpy(new_user.user_name, "NewUser");
+//    strcpy(new_user.user_password, "password");
+//    strcpy(new_user.user_id, "2");
+//    new_user.user_role = (char)UserRole::USER;
+//    ut.next = &new_user;
+
+//    usersTable current_user = ut;
+//    while (true) {
+//        std::cout << "1" << std::endl;
+//        std::cout << current_user.user_name << std::endl;
+//        if (current_user.next == nullptr) {
+//            break;
+//        }
+//        current_user = *current_user.next;
+//    }
+
+//    return 0;
     QApplication a(argc, argv);
     SystemSelector ss;
     ss.show();
