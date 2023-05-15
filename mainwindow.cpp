@@ -9,7 +9,7 @@ MainWindow::MainWindow(operatingSystem t_os, QWidget *parent)
 {
     ui->setupUi(this);
 
-    getAllUsers();
+    // getAllUsers();
     // QList<usersTable> all_users = getAllUsers();
 //    for (int i = 0; i < all_users.length(); ++i) {
 //        qDebug() << all_users[i].user_id;
@@ -20,7 +20,7 @@ MainWindow::MainWindow(operatingSystem t_os, QWidget *parent)
     setFunctionCallers();
 
     ui->commandsInput_textEdit->installEventFilter(this);
-    ui->greetingsUser_label->setText("Здравствуй, " + QString(m_os.user_table.user_name));
+    ui->greetingsUser_label->setText("Здравствуй, " + QString(m_os.users[0].user_name));
 }
 
 MainWindow::~MainWindow()
@@ -88,36 +88,36 @@ void logout(char t_user_name[15])
 
 }
 
-usersTable getNextUser(usersTable current_user)
-{
-    usersTable* next_user = current_user.next;
-}
+//usersTable getNextUser(usersTable current_user)
+//{
+//    usersTable* next_user = current_user.next;
+//}
 
-int getLastUserId(usersTable users_table)
-{
-    usersTable *current_user = &users_table;
-    while (current_user->next) {
-        current_user = current_user->next;
-    }
-
-    return (int)current_user->user_id;
-}
-
-QList<usersTable> MainWindow::getAllUsers()
-{
-    QList<usersTable> all_users;
-    usersTable *current_user = &m_os.user_table;
-
-    // all_users.append(*current_user);
-    qDebug() << current_user->next;
-    qDebug() << current_user->next->user_id;
-    current_user = current_user->next;
-//    for (int i = 0; i < all_users.length(); ++i) {
-//        qDebug() << all_users[i].user_id;
+//int getLastUserId(usersTable users_table)
+//{
+//    usersTable *current_user = &users_table;
+//    while (current_user->next) {
+//        current_user = current_user->next;
 //    }
 
-    return all_users;
-}
+//    return (int)current_user->user_id;
+//}
+
+//QList<usersTable> MainWindow::getAllUsers()
+//{
+//    QList<usersTable> all_users;
+//    usersTable *current_user = &m_os.user_table;
+
+//    // all_users.append(*current_user);
+//    qDebug() << current_user->next;
+//    qDebug() << current_user->next->user_id;
+//    current_user = current_user->next;
+////    for (int i = 0; i < all_users.length(); ++i) {
+////        qDebug() << all_users[i].user_id;
+////    }
+
+//    return all_users;
+//}
 
 //void login(char t_user_name[15], char t_user_password[32]);
 //void logout(char t_user_name[15]);
@@ -137,7 +137,7 @@ void MainWindow::saveOSState()
     std::ofstream output_file(file_system_name.toStdString());
     output_file.write((char*)&m_os.super_block, sizeof(m_os.super_block));
     output_file.write((char*)&m_os.root_directory, sizeof(m_os.root_directory));
-    output_file.write((char*)&m_os.user_table, sizeof(m_os.user_table));
+    output_file.write((char*)&m_os.users, sizeof(m_os.users));
     output_file.close();
 }
 
@@ -234,7 +234,7 @@ void MainWindow::createUser(QStringList t_commands_list)
         char user_role = t_commands_list[3].at(0).unicode();
 
         usersTable new_user = usersTable();
-        strcpy(new_user.user_id, (char*)(getLastUserId(m_os.user_table) + 1));
+        // strcpy(new_user.user_id, (char*)(getLastUserId(m_os.user_table) + 1));
         strcpy(new_user.user_name, user_name);
         strcpy(new_user.user_password, user_password);
         strcpy(&new_user.user_role, &user_role);

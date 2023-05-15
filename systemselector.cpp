@@ -22,7 +22,7 @@ void SystemSelector::readFromFile(std::string t_file_name, operatingSystem &t_os
 {
     superBlock sb;
     rootDirectory rd;
-    usersTable ut;
+    std::vector<usersTable> users;
 
     std::ifstream input_file(t_file_name);
 
@@ -30,11 +30,11 @@ void SystemSelector::readFromFile(std::string t_file_name, operatingSystem &t_os
     input_file.seekg(sb.root_dir_offset);
     input_file.read((char*)&rd, sizeof(rd));
     input_file.seekg(sb.user_table_offset);
-    input_file.read((char*)&ut, sizeof(ut));
+    input_file.read((char*)&users, sizeof(users));
 
     t_os.super_block = sb;
     t_os.root_directory = rd;
-    t_os.user_table = ut;
+    t_os.users = users;
 
 //    std::cout << "Super Block: " << std::endl;
 //    std::cout << sb.file_system_name << std::endl;
@@ -80,10 +80,10 @@ void SystemSelector::chooseFileSystem()
 
 void SystemSelector::createFileSystem()
 {
-    if (ui->fileSystemName_textEdit->toPlainText().length() == 0) {
+    if (ui->fileSystemName_textEdit->toPlainText().isEmpty()) {
         return;
     }
-    char* file_system_name;
+    const char* file_system_name = ui->fileSystemName_textEdit->toPlainText().toStdString().c_str();
     // strcpy(file_system_name, ui->fileSystemName_textEdit->toPlainText().toStdString().c_str());
     superBlock sb;
     strcpy(sb.file_system_name, "test");
@@ -107,25 +107,28 @@ void SystemSelector::createFileSystem()
     rd.initial_cluster_number = 1;
 
     usersTable ut;
-    strcpy(ut.user_name, "ChazGrant");
-    strcpy(ut.user_password, "password");
-    strcpy(ut.user_id, "1");
+    strcpy(ut.user_name, "ChazGrant\0");
+    strcpy(ut.user_password, "password\0");
+    strcpy(ut.user_id, "1\0");
     ut.user_role = (char)UserRole::USER;
 
     usersTable new_user;
-    strcpy(new_user.user_name, "NewUser");
-    strcpy(new_user.user_password, "password");
-    strcpy(new_user.user_id, "2");
+    strcpy(new_user.user_name, "NewUser\0");
+    strcpy(new_user.user_password, "password\0");
+    strcpy(new_user.user_id, "2\0");
     new_user.user_role = (char)UserRole::USER;
-    ut.next = &new_user;
+
+    std::vector<usersTable> users;
+    users.push_back(ut);
+    users.push_back(new_user);
 
     // sprintf(file_system_name, "%s%s", file_system_name, ".bin");
     // std::ofstream output_file(file_system_name);
-    std::ofstream output_file("test.bin");
+    std::ofstream output_file(file_system_name);
 
     output_file.write((char*)&sb, sizeof(sb));
     output_file.write((char*)&rd, sizeof(rd));
-    output_file.write((char*)&ut, sizeof(ut));
+    output_file.write((char*)&users, sizeof(users) * users.size());
     output_file.close();
     qDebug() << "File System Has Been Created";
 }

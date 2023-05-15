@@ -49,13 +49,12 @@ typedef struct usersTable {
     char user_password[32];
     char user_id[2];
     char user_role;
-    usersTable* next = nullptr;
 } usersTable;
 
 typedef struct operatingSystem {
     superBlock super_block;
     rootDirectory root_directory;
-    usersTable user_table;
+    std::vector<usersTable> users;
 } operatingSystem;
 
 struct functionCaller {

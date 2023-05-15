@@ -23,11 +23,17 @@ void AuthForm::login()
     ui->userPassword_textEdit->setText("password");
     QString username = ui->userName_textEdit->toPlainText();
     QString password = ui->userPassword_textEdit->toPlainText();
-    if (os.user_table.user_name == username && os.user_table.user_password == password) {
-        MainWindow *mw = new MainWindow(this->os);
-        mw->show();
-        this->close();
-    } else {
-        qDebug() << "NOT MATCH";
+    bool login_failed = true;
+    for (int i = 0; i < os.users.size(); ++i) {
+        if (os.users[i].user_name == username && os.users[i].user_password == password) {
+            login_failed = false;
+        }
     }
+        if (login_failed) {
+            qDebug() << "NOT MATCH";
+            return;
+        }
+    MainWindow *mw = new MainWindow(this->os);
+    mw->show();
+    this->close();
 }
